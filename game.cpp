@@ -68,3 +68,70 @@ int Game::score() {
     return 0;
 }
 
+Move Game::minimax(char AIboard[3][3]){
+    int bestMoveScore = 100;
+    Move bestMove;
+
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            if (AIboard[i][j] == '-') {
+                AIboard[i][j] = ai;
+                int tempMoveScore = maxsearch(AIboard);
+                if(tempMoveScore <= bestMoveScore){
+                    bestMoveScore = tempMoveScore;
+                    bestMove.row = i;
+                    bestMove.col = j;
+                }
+                AIboard[i][j] = '-';
+            }
+        }
+    }
+    return bestMove;
+}
+
+int Game::maxsearch(char AIboard[3][3]) {
+    if(gameOver()) return score();
+    Move bestMove;
+
+    int BestMoveScore = -1000;
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            if (AIboard[i][j] == '-') {
+                int tempMoveScore = minsearch(AIboard);
+                if (tempMoveScore >= BestMoveScore) {
+                    BestMoveScore = tempMoveScore;
+                    bestMove.row = i;
+                    bestMove.col = j;
+                }
+                AIboard[i][j] = '-';
+            }
+            
+        }
+        
+    }
+    return BestMoveScore;
+}
+
+int Game::minsearch(char AIboard[3][3]) {
+    if(gameOver()) return score();
+    Move bestMove;
+
+    int BestMoveScore = 1000;
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            if (AIboard[i][j] == '-') {
+                int tempMoveScore = maxsearch(AIboard);
+                if (tempMoveScore <= BestMoveScore) {
+                    BestMoveScore = tempMoveScore;
+                    bestMove.row = i;
+                    bestMove.col = j;
+                }
+                AIboard[i][j] = '-';
+            }
+            
+        }
+        
+    }
+    return BestMoveScore;
+}
+
