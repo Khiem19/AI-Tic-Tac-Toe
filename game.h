@@ -1,3 +1,6 @@
+#ifndef GAME_H
+#define GAME_H
+
 #include <iostream>
 
 using namespace std;
@@ -8,8 +11,8 @@ const char ai = 'O';
 enum Player {HUMAN, AI};
 
 struct Move {
-    int row;
-    int col;
+    int x;
+    int y;
 };
 
 class Game {
@@ -36,3 +39,5 @@ class Game {
 
         int maxsearch(char AIboard[3][3]);
 };
+
+#endif
