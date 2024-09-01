@@ -30,9 +30,9 @@ class Game {
 
         int score();
 
-        Move minimax(char AIboard[3][3]);
+        Move minimax(char AIboard[5][5], int alpha, int beta, bool isMaximizing);
 
-        int minsearch(char AIboard[3][3]);
+        int minsearch(char AIboard[5][5], int alpha, int beta);
 
-        int maxsearch(char AIboard[3][3]);
+        int maxsearch(char AIboard[5][5], int alpha, int beta);
 };
