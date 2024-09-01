@@ -1,6 +1,3 @@
-#ifndef GAME_H
-#define GAME_H
-
 #include <iostream>
 
 using namespace std;
@@ -16,7 +13,7 @@ struct Move {
 };
 
 class Game {
-    char board[3][3];
+    char board[5][5];
 
     public:
         Game();
@@ -39,5 +36,3 @@ class Game {
 
         int maxsearch(char AIboard[3][3]);
 };
-
-#endif

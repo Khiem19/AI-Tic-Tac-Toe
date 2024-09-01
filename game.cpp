@@ -6,8 +6,8 @@
 using namespace std;
 
 Game::Game() {
-	for(int i = 0; i < 3; i++) {
-		for(int j = 0; j < 3; j++) {
+	for(int i = 0; i < 5; i++) {
+		for(int j = 0; j < 5; j++) {
 			board[i][j] = '-';
 		}
 	}
@@ -15,10 +15,10 @@ Game::Game() {
 
 void Game::printBoard() {
 	cout << "-------------------";
-	for(int i = 0; i < 3; i++) {
+	for(int i = 0; i < 5; i++) {
 		cout << '\n' << "|";
-		for(int j = 0; j < 3; j++) {
-			cout << setw(3) << board[i][j] << setw(3) << " |";
+		for(int j = 0; j < 5; j++) {
+			cout << setw(5) << board[i][j] << setw(5) << " |";
 		}
 	}
 	cout << '\n' << "-------------------" << '\n';
@@ -29,8 +29,8 @@ bool Game::gameOver() {
 	else if(CheckWin(AI)) return true;
 
 	bool emptySpace = false;
-	for(int i = 0; i < 3; i++) {
-		if(board[i][0] == '-' || board[i][1] == '-' || board[i][2] == '-')
+	for(int i = 0; i < 5; i++) {
+		if(board[i][0] == '-' || board[i][1] == '-' || board[i][2] == '-' || board[i][3] == '-' || board[i][4] == '-')
 			emptySpace = true;
 	}
 	return !emptySpace;
@@ -41,26 +41,40 @@ bool Game::CheckWin(Player player) {
 	if(player == HUMAN) playerChar = human;
 	else playerChar = ai;
 
-	for(int i = 0; i < 3; i++) {
-		// Check horizontals
-		if(board[i][0] == playerChar && board[i][1] == playerChar
-			&& board[i][2] == playerChar)
-			return true;
-
-		// Check verticals
-		if(board[0][i] == playerChar && board[1][i] == playerChar
-			&& board[2][i] == playerChar)
-			return true;
+	for(int i = 0; i < 5; i++) {
+		for(int j = 0; j < 3; j++) {
+			//check horizontals
+			if(board[i][j] == playerChar && board[i][j+1] == playerChar 
+				&& board[i][j+2] == playerChar){
+					return true;
+				}
+			//check verticals
+			if(board[i][j] == playerChar && board[i+1][j] == playerChar 
+				&& board[i+2][j] == playerChar){
+					return true;
+				}
+		}
 	}
 
-	// Check diagonals
-	if (board[0][0] == playerChar && board[1][1] == playerChar 
-		&& board[2][2] == playerChar) {
-		return true;
-	} else if (board[0][2] == playerChar && board[1][1] == playerChar 
-		&& board[2][0] == playerChar) {
-		return true;
-	}
+	//Check diagonals (top-left to bottom-right)
+	for(int i = 0; i <= 2; i++) {
+        for(int j = 0; j <= 2; j++) {
+            if(board[i][j] == playerChar && board[i+1][j+1] == playerChar
+               && board[i+2][j+2] == playerChar) {
+                return true;
+            }
+        }
+    }
+
+    // Check diagonals (top-right to bottom-left)
+    for(int i = 0; i <= 2; i++) {
+        for(int j = 2; j < 5; j++) {
+            if(board[i][j] == playerChar && board[i+1][j-1] == playerChar
+               && board[i+2][j-2] == playerChar) {
+                return true;
+            }
+        }
+    }
 
 	return false;
 }
